@@ -6,6 +6,7 @@
  * C++: introduced the usage of typealias for 'string_view' type and fallback to custom 'StringView' type instead of 'std::string_view' in the case when C++17 is not available. This is part of the work to restore C++ code compatibility with C++14.
  * Kotlin: added `@AsyncDecorator` attribute for generating Kotlin coroutine `suspend` extension functions from callback-based asynchronous functions. This allows Kotlin consumers to call async APIs using idiomatic coroutines instead of raw callbacks. Supports result/error mapping, cancellation via `@AsyncTaskHandle`, and custom wrapper naming via `@AsyncDecorator(Name = "...")`.
  * Dart: fixed generation of invalid Dart code for struct constructors. Structs with internal fields now hide those fields from generated constructors and make the free-args/initialized-fields constructor private (`._withDefaults`) instead of exposing internal-only members publicly. Also fixed resolution of the constructor overload used for struct initializer expressions (positional-defaults, named field constructors) so it correctly matches by argument count and `@Default`/`@Name` attributes.
+ * Kotlin: added `@Kotlin(DataClass)` attribute that makes Gluecodium emit a LimeIDL `struct` as an immutable Kotlin `data class` (val members, public constructor, copy/equals/hashCode/component-N), while keeping struct methods as external functions and statics in a companion object. Only valid on `struct`; applying it to a `class` is rejected at build time.
 
 ## 14.1.1
 Release date 2026-03-03

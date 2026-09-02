@@ -47,7 +47,8 @@ class LimeAndroidAttributesMismatchValidator(private val limeLogger: LimeLogger,
         val commonAttributes = kotlinAttributes intersect javaAttributes
 
         var result = true
-        val attributesMissingInJava = kotlinAttributes subtract commonAttributes
+        val attributesMissingInJava =
+            (kotlinAttributes subtract commonAttributes) - LimeAttributeValueType.DATA_CLASS
         if (attributesMissingInJava.isNotEmpty()) {
             logAttributesMismatch(
                 element = element,

@@ -33,6 +33,7 @@ import com.here.gluecodium.generator.cpp.CppNameCache
 import com.here.gluecodium.generator.cpp.CppNameRules
 import com.here.gluecodium.generator.jni.JniTemplates
 import com.here.gluecodium.model.lime.LimeAttributeType.KOTLIN
+import com.here.gluecodium.model.lime.LimeAttributeValueType.DATA_CLASS
 import com.here.gluecodium.model.lime.LimeClass
 import com.here.gluecodium.model.lime.LimeEnumeration
 import com.here.gluecodium.model.lime.LimeException
@@ -295,7 +296,12 @@ internal class KotlinGenerator : Generator {
 
     private fun selectTemplate(limeElement: LimeNamedElement) =
         when (limeElement) {
-            is LimeClass -> "kotlin/KotlinClass"
+            is LimeClass ->
+                if (limeElement.attributes.have(KOTLIN, DATA_CLASS)) {
+                    "kotlin/KotlinDataClass"
+                } else {
+                    "kotlin/KotlinClass"
+                }
             is LimeInterface -> "kotlin/KotlinInterface"
             is LimeStruct -> "kotlin/KotlinStruct"
             is LimeEnumeration -> "kotlin/KotlinEnumeration"
